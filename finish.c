@@ -189,4 +189,8 @@ void loop() {
   }
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
+  
+  tone(SP_PIN, tones);
+  delay(100);
+  noTone(SP_PIN);
 }
