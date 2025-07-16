@@ -14,7 +14,7 @@
 SoftwareSerial bluetooth(BT_RXD, BT_TXD);
 
 // Speaker Reset //
-#define SP_PIN 2
+#define SP_PIN 5
 float spTone[] = {32.7032,34.6478,36.7081,38.8909,41.2034,41.2034,43.6535,46.2493,48.9994,51.9130,55.0000,58.2705,61.7354};
 String spMusic = "12345";
 
@@ -173,10 +173,16 @@ void loop() {
       lcd.print(nuidPICC[i]);
       lcd.print(" ");
     }
+
     cooltime = 5;
     lcd.setCursor(0,1);
-    lcd.write(2);
-    lcd.print("23:59");
+    if(nuidPICC[0]==115 && nuidPICC[1]==198 && nuidPICC[2] == 210 && nuidPICC[3] == 247) {
+      lcd.print("X GET OUT");
+    } else {
+      lcd.print("O Good Siksa");
+    }
+
+
     Serial.println(nuidPICC[0]);
   
     for (byte i = 0; i < 4; i++) {
@@ -186,11 +192,11 @@ void loop() {
     for (byte i = 0; i < 4; i++) {
         nuidPICC[i] = NULL;
     }
+    tone(SP_PIN, 987.7666);
+    delay(100);
+    noTone(SP_PIN);
   }
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
   
-  tone(SP_PIN, tones);
-  delay(100);
-  noTone(SP_PIN);
 }
